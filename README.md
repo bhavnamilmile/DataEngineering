@@ -90,8 +90,8 @@ Learning home:
 - [Browser Learning Home](docs/index.html)
 - GitHub Pages URL after publish: <https://bhavnamilmile.github.io/DataEngineering/>
 
-GitHub Pages is configured with `.github/workflows/pages.yml` to publish the `docs/` folder.
-If GitHub asks for a Pages source, choose **GitHub Actions**.
+GitHub Pages is published from the `gh-pages` branch. If GitHub asks for a Pages source,
+choose **Deploy from a branch**, then select `gh-pages` and `/ (root)`.
 
 Learning visuals:
 
