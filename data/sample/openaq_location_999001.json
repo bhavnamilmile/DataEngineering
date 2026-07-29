@@ -1,0 +1,58 @@
+{
+  "meta": {
+    "name": "openaq-api",
+    "website": "/",
+    "page": 1,
+    "limit": 100,
+    "found": 1
+  },
+  "results": [
+    {
+      "id": 999001,
+      "name": "Los Angeles Sample",
+      "locality": "California",
+      "timezone": "America/Los_Angeles",
+      "country": {
+        "id": 155,
+        "code": "US",
+        "name": "United States"
+      },
+      "owner": {
+        "id": 999,
+        "name": "Sample Data"
+      },
+      "provider": {
+        "id": 999,
+        "name": "Sample Provider"
+      },
+      "isMobile": false,
+      "isMonitor": true,
+      "sensors": [
+        {
+          "id": 999101,
+          "name": "pm25 ug/m3",
+          "parameter": {
+            "id": 2,
+            "name": "pm25",
+            "units": "ug/m3",
+            "displayName": "PM2.5"
+          }
+        },
+        {
+          "id": 999102,
+          "name": "o3 ppm",
+          "parameter": {
+            "id": 10,
+            "name": "o3",
+            "units": "ppm",
+            "displayName": "Ozone"
+          }
+        }
+      ],
+      "coordinates": {
+        "latitude": 34.0522,
+        "longitude": -118.2437
+      }
+    }
+  ]
+}

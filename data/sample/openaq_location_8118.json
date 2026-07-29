@@ -1,0 +1,58 @@
+{
+  "meta": {
+    "name": "openaq-api",
+    "website": "/",
+    "page": 1,
+    "limit": 100,
+    "found": 1
+  },
+  "results": [
+    {
+      "id": 8118,
+      "name": "New Delhi",
+      "locality": "India",
+      "timezone": "Asia/Kolkata",
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "owner": {
+        "id": 4,
+        "name": "Unknown Governmental Organization"
+      },
+      "provider": {
+        "id": 119,
+        "name": "AirNow"
+      },
+      "isMobile": false,
+      "isMonitor": true,
+      "sensors": [
+        {
+          "id": 23534,
+          "name": "pm25 ug/m3",
+          "parameter": {
+            "id": 2,
+            "name": "pm25",
+            "units": "ug/m3",
+            "displayName": "PM2.5"
+          }
+        },
+        {
+          "id": 23535,
+          "name": "o3 ppm",
+          "parameter": {
+            "id": 10,
+            "name": "o3",
+            "units": "ppm",
+            "displayName": "Ozone"
+          }
+        }
+      ],
+      "coordinates": {
+        "latitude": 28.63576,
+        "longitude": 77.22445
+      }
+    }
+  ]
+}

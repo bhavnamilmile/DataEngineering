@@ -1,0 +1,527 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Task 02: Relational Modeling</title>
+  <style>
+    :root {
+      --accent: #ff4b4b;
+      --accent-soft: #fff1f2;
+      --bg: #ffffff;
+      --sidebar: #f7f8fa;
+      --text: #262730;
+      --muted: #6b7280;
+      --border: #e6e9ef;
+      --code: #f0f2f6;
+      --blue: #2563eb;
+      --green: #047857;
+      --amber: #b45309;
+      --shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    .app {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 292px minmax(0, 1fr);
+    }
+
+    aside {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: auto;
+      background: var(--sidebar);
+      border-right: 1px solid var(--border);
+      padding: 28px 22px;
+    }
+
+    main {
+      max-width: 1180px;
+      width: 100%;
+      padding: 42px 52px 80px;
+    }
+
+    .brand {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 28px;
+    }
+
+    .brand-mark {
+      width: 22px;
+      height: 22px;
+      border-radius: 6px;
+      background: var(--accent);
+      box-shadow: inset 0 -6px 0 rgba(0, 0, 0, 0.12);
+    }
+
+    .brand-title {
+      font-weight: 700;
+      font-size: 1.05rem;
+    }
+
+    nav a {
+      display: block;
+      color: var(--text);
+      text-decoration: none;
+      padding: 8px 10px;
+      border-radius: 8px;
+      font-size: 0.94rem;
+    }
+
+    nav a:hover { background: #eceff4; }
+
+    .sidebar-label {
+      margin: 26px 0 8px;
+      color: var(--muted);
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-size: 2.65rem;
+      line-height: 1.12;
+      margin: 0 0 10px;
+    }
+
+    h2 {
+      font-size: 1.55rem;
+      margin: 44px 0 14px;
+    }
+
+    h3 {
+      margin: 0 0 8px;
+      font-size: 1.08rem;
+    }
+
+    p { margin: 0 0 14px; }
+
+    .lede {
+      color: var(--muted);
+      font-size: 1.08rem;
+      max-width: 850px;
+      margin-bottom: 26px;
+    }
+
+    .pill {
+      display: inline-flex;
+      border: 1px solid var(--border);
+      background: var(--accent-soft);
+      color: #9f1239;
+      border-radius: 999px;
+      padding: 5px 12px;
+      font-size: 0.86rem;
+      font-weight: 650;
+      margin-bottom: 16px;
+    }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin: 24px 0 14px;
+    }
+
+    .metric, .panel, .table-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    .metric { padding: 15px 16px; }
+    .panel { padding: 18px; margin: 14px 0; }
+
+    .metric-label {
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 750;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .metric-value {
+      font-size: 1.45rem;
+      font-weight: 730;
+      margin-top: 5px;
+    }
+
+    .metric-note {
+      color: var(--muted);
+      font-size: 0.86rem;
+      margin-top: 4px;
+    }
+
+    .compare {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .before { border-left: 5px solid var(--amber); }
+    .after { border-left: 5px solid var(--green); }
+
+    .flow {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+      align-items: stretch;
+    }
+
+    .flow-card {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+      min-height: 110px;
+      background: #fff;
+    }
+
+    .schema {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .schema-card {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+      background: #fff;
+    }
+
+    .schema-card.fact {
+      border-color: #fecaca;
+      background: #fffafa;
+    }
+
+    ul { margin: 0 0 0 20px; padding: 0; }
+    li { margin: 7px 0; }
+
+    code, pre {
+      background: var(--code);
+      border-radius: 6px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 0.92em;
+    }
+
+    code { padding: 2px 5px; }
+
+    pre {
+      overflow: auto;
+      padding: 14px;
+      line-height: 1.45;
+      border: 1px solid var(--border);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      border-bottom: 1px solid var(--border);
+      padding: 10px 8px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      color: var(--muted);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .links a {
+      display: inline-flex;
+      color: var(--blue);
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 999px;
+      text-decoration: none;
+      padding: 5px 11px;
+      font-size: 0.88rem;
+      font-weight: 650;
+    }
+
+    @media (max-width: 980px) {
+      .app { display: block; }
+      aside { position: static; height: auto; }
+      main { padding: 30px 20px 60px; }
+      .metric-grid, .compare, .flow, .schema { grid-template-columns: 1fr; }
+      h1 { font-size: 2.05rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside>
+      <div class="brand">
+        <div class="brand-mark"></div>
+        <div class="brand-title">Task 02 Guide</div>
+      </div>
+      <nav>
+        <a href="../index.html">Learning Home</a>
+        <a href="#what-new">What Was New</a>
+        <a href="#before-after">Before And After</a>
+        <a href="#tables">Tables</a>
+        <a href="#sample-rows">Sample Rows</a>
+        <a href="#flow">Refresh Flow</a>
+        <a href="#practice">Practice</a>
+        <a href="#files">Files</a>
+      </nav>
+      <div class="sidebar-label">Related</div>
+      <nav>
+        <a href="../air-quality-pulse-visual-guide.html">Task 01 Visual Guide</a>
+        <a href="../../sql/task_02_relational_modeling_queries.sql">Task 02 SQL</a>
+      </nav>
+    </aside>
+
+    <main>
+      <section>
+        <div class="pill">Task 02: Relational Modeling</div>
+        <h1>From One Wide Table To A Joinable Analytics Mart</h1>
+        <p class="lede">
+          The new learning in this task is not a new API or a new dashboard. It is a new way to organize
+          the curated data so it behaves like a small warehouse: dimensions describe things, facts record events,
+          and keys make joins reliable.
+        </p>
+
+        <div class="metric-grid">
+          <div class="metric">
+            <div class="metric-label">New Concept</div>
+            <div class="metric-value">Grain</div>
+            <div class="metric-note">What one row means</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">New Tables</div>
+            <div class="metric-value">3 dims + 1 fact</div>
+            <div class="metric-note">Location, parameter, sensor, reading</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">New Safety</div>
+            <div class="metric-value">Foreign keys</div>
+            <div class="metric-note">Facts must match dimensions</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">New Skill</div>
+            <div class="metric-value">Joins</div>
+            <div class="metric-note">Analytics across related tables</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="what-new">
+        <h2>What Exactly Was New?</h2>
+        <div class="panel">
+          <p>
+            Task 01 answered: <strong>Can I ingest, clean, validate, and store data?</strong>
+          </p>
+          <p>
+            Task 02 answers: <strong>Can I model that stored data like an analytics database?</strong>
+          </p>
+          <p>
+            The original table still exists. The new task adds a second layer derived from it:
+            <code>dim_location</code>, <code>dim_parameter</code>, <code>dim_sensor</code>, and
+            <code>fact_air_quality_measurement</code>.
+          </p>
+        </div>
+      </section>
+
+      <section id="before-after">
+        <h2>Before And After</h2>
+        <div class="compare">
+          <div class="panel before">
+            <h3>Before: Curated Landing Table</h3>
+            <p><code>air_quality_measurements</code> is wide and convenient.</p>
+            <ul>
+              <li>One row includes location, pollutant, sensor, value, timestamps, and quality fields.</li>
+              <li>Great for a first dashboard and simple SQL.</li>
+              <li>Repeats location and pollutant descriptions on every measurement row.</li>
+            </ul>
+          </div>
+          <div class="panel after">
+            <h3>After: Relational Analytics Mart</h3>
+            <p>The same information is split by meaning.</p>
+            <ul>
+              <li>Locations live once in <code>dim_location</code>.</li>
+              <li>Pollutants live once in <code>dim_parameter</code>.</li>
+              <li>Sensors connect locations to pollutants in <code>dim_sensor</code>.</li>
+              <li>Readings live in <code>fact_air_quality_measurement</code>.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="tables">
+        <h2>The New Tables</h2>
+        <div class="schema">
+          <div class="schema-card">
+            <h3>dim_location</h3>
+            <p>One row per monitoring location.</p>
+            <p><code>location_id</code> is the primary key.</p>
+          </div>
+          <div class="schema-card">
+            <h3>dim_parameter</h3>
+            <p>One row per pollutant and unit pair.</p>
+            <p><code>pm25|ug/m3</code> is an example key.</p>
+          </div>
+          <div class="schema-card">
+            <h3>dim_sensor</h3>
+            <p>One row per sensor.</p>
+            <p>Links a location to a pollutant.</p>
+          </div>
+          <div class="schema-card fact">
+            <h3>fact_air_quality_measurement</h3>
+            <p>One row per reading.</p>
+            <p>Stores the timestamp and measured value.</p>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h3>Why the word grain matters</h3>
+          <table>
+            <tr><th>Table</th><th>One Row Means</th><th>Example Question</th></tr>
+            <tr><td><code>dim_location</code></td><td>One monitoring location</td><td>Which cities do we monitor?</td></tr>
+            <tr><td><code>dim_parameter</code></td><td>One pollutant/unit pair</td><td>Which pollutants exist in the dataset?</td></tr>
+            <tr><td><code>dim_sensor</code></td><td>One sensor at a location for a pollutant</td><td>Which sensors measure PM2.5?</td></tr>
+            <tr><td><code>fact_air_quality_measurement</code></td><td>One sensor reading at one timestamp</td><td>Which readings are highest?</td></tr>
+          </table>
+        </div>
+      </section>
+
+      <section id="sample-rows">
+        <h2>Sample Rows From The New Tables</h2>
+        <p>
+          These rows are small on purpose. The goal is to see what each table stores and how the keys connect.
+        </p>
+
+        <div class="panel">
+          <h3>dim_location</h3>
+          <table>
+            <tr><th>location_id</th><th>location_name</th><th>country_code</th><th>provider_name</th><th>latitude</th><th>longitude</th></tr>
+            <tr><td>8118</td><td>New Delhi</td><td>IN</td><td>AirNow</td><td>28.63576</td><td>77.22445</td></tr>
+            <tr><td>910001</td><td>Mumbai</td><td>IN</td><td>Sample Provider</td><td>19.076</td><td>72.8777</td></tr>
+            <tr><td>910002</td><td>Delhi</td><td>IN</td><td>Sample Provider</td><td>28.6139</td><td>77.209</td></tr>
+          </table>
+          <p>Each row is one monitoring location.</p>
+        </div>
+
+        <div class="panel">
+          <h3>dim_parameter</h3>
+          <table>
+            <tr><th>parameter_key</th><th>parameter</th><th>parameter_display_name</th><th>unit</th></tr>
+            <tr><td><code>o3|ppm</code></td><td><code>o3</code></td><td>Ozone</td><td>ppm</td></tr>
+            <tr><td><code>pm25|ug/m3</code></td><td><code>pm25</code></td><td>PM2.5</td><td>ug/m3</td></tr>
+          </table>
+          <p>Each row is one pollutant and unit pair. Many sensors can point to the same parameter row.</p>
+        </div>
+
+        <div class="panel">
+          <h3>dim_sensor</h3>
+          <table>
+            <tr><th>sensor_id</th><th>location_id</th><th>parameter_key</th></tr>
+            <tr><td>23534</td><td>8118</td><td><code>pm25|ug/m3</code></td></tr>
+            <tr><td>23535</td><td>8118</td><td><code>o3|ppm</code></td></tr>
+            <tr><td>999101</td><td>999001</td><td><code>pm25|ug/m3</code></td></tr>
+            <tr><td>999102</td><td>999001</td><td><code>o3|ppm</code></td></tr>
+          </table>
+          <p>Each row is one sensor at one location measuring one pollutant.</p>
+        </div>
+
+        <div class="panel">
+          <h3>fact_air_quality_measurement</h3>
+          <table>
+            <tr><th>measurement_key</th><th>location_id</th><th>sensor_id</th><th>parameter_key</th><th>measured_at_utc</th><th>value</th></tr>
+            <tr><td><code>910002:9100021:2026-07-29T14:00:00Z</code></td><td>910002</td><td>9100021</td><td><code>pm25|ug/m3</code></td><td>2026-07-29T14:00:00Z</td><td>86.2</td></tr>
+            <tr><td><code>910010:9100101:2026-07-29T14:00:00Z</code></td><td>910010</td><td>9100101</td><td><code>pm25|ug/m3</code></td><td>2026-07-29T14:00:00Z</td><td>63.4</td></tr>
+            <tr><td><code>910007:9100071:2026-07-29T14:00:00Z</code></td><td>910007</td><td>9100071</td><td><code>pm25|ug/m3</code></td><td>2026-07-29T14:00:00Z</td><td>57.7</td></tr>
+          </table>
+          <p>Each row is one measurement event. Location and pollutant names come from joins.</p>
+        </div>
+      </section>
+
+      <section id="flow">
+        <h2>Refresh Flow</h2>
+        <div class="flow">
+          <div class="flow-card">
+            <h3>1. Land Curated Rows</h3>
+            <p>The pipeline writes or updates <code>air_quality_measurements</code>.</p>
+          </div>
+          <div class="flow-card">
+            <h3>2. Rebuild Dimensions</h3>
+            <p>The mart refresh derives locations, parameters, and sensors from the landing table.</p>
+          </div>
+          <div class="flow-card">
+            <h3>3. Rebuild Facts</h3>
+            <p>The fact table is rebuilt from valid measurement rows with keys back to dimensions.</p>
+          </div>
+        </div>
+        <div class="panel">
+          <p>
+            This is idempotent for the local learning project: rerunning the same sample does not duplicate facts.
+            Larger systems often evolve this into incremental merge logic or dbt models.
+          </p>
+        </div>
+      </section>
+
+      <section id="practice">
+        <h2>Practice Query</h2>
+        <p>This query is the main new behavior: facts joined to descriptive dimensions.</p>
+        <pre><code>select
+    location.location_name,
+    parameter.parameter_display_name,
+    parameter.unit,
+    fact.value,
+    fact.measured_at_utc
+from fact_air_quality_measurement as fact
+join dim_location as location
+    on location.location_id = fact.location_id
+join dim_parameter as parameter
+    on parameter.parameter_key = fact.parameter_key
+order by fact.value desc;</code></pre>
+
+        <p>Run the full workbook:</p>
+        <pre><code>sqlite3 data/curated/air_quality_pulse.db &lt; sql/task_02_relational_modeling_queries.sql</code></pre>
+      </section>
+
+      <section id="files">
+        <h2>Task 02 Files</h2>
+        <table>
+          <tr><th>File</th><th>Purpose</th></tr>
+          <tr><td><code>src/air_quality_pulse/relational_mart.py</code></td><td>Creates and refreshes the relational mart.</td></tr>
+          <tr><td><code>tests/task_02/test_relational_mart.py</code></td><td>Proves the mart is joinable and idempotent.</td></tr>
+          <tr><td><code>sql/task_02_relational_modeling_queries.sql</code></td><td>Practice queries for table counts, joins, grain checks, and query plans.</td></tr>
+          <tr><td><code>docs/tasks/02-relational-modeling.md</code></td><td>Markdown version of the learning task.</td></tr>
+        </table>
+        <div class="links">
+          <a href="../index.html">Back To Learning Home</a>
+          <a href="./02-relational-modeling.md">Markdown Guide</a>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
